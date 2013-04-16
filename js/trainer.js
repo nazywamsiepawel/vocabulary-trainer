@@ -16,6 +16,7 @@ var VocabularyTrainer = function(options, vocabularyData){
 	for(var i=0; i<options.trainingCycles; i++){
 		this.stats.push(new Array());
 	}
+
 	var i = 0;
 
 	for(var i=0; i<this.vocabularyData.words.length; i++){
