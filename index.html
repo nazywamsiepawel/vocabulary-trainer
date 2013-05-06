@@ -1,7 +1,11 @@
 <html>
 	<head>
 		<title>Vocabulary trainer</title>
+		<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 		<link rel="stylesheet" href="css/basic.css" stype='text/css'>
+	    <link rel="stylesheet" href="font/stylesheet.css" stype='text/css'>
+	    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	
 		<script src="js/lib/jquery-1.9.1.min.js"></script>
 		<script src="js/lib/easing.js"></script>
 		<script src="js/lib/underscore.js"></script>
@@ -11,17 +15,24 @@
 		<script src="js/trainer.js"></script>
 		<script src="js/chart.js"></script>
 		<style>
-			.content{width:400px; height:100px; margin:0 auto; margin-top:100px; font-size:40px; color:white; font-family: Georgia; text-align:center;}
+		
+
+			.content{width:400px; height:100px; margin:0 auto; margin-top:100px; font-size:40px; color:white; font-family: Alef; text-align:center;}
 			.answer{width:400px; height:100px; margin:0 auto; text-align: center}
+			.letters{width:400px; height:100px; margin:0 auto; text-align: center;}
 			#chart{margin:0 auto;  border-bottom:4px solid #4E8739; width:1900; height:400px; position:fixed; bottom:0px;}
-			input{padding:5px; border-radius:10px; border:4px solid #dedede; font-size:30px; color:gray; outline-width: 0;}
+			.view{height:800px; width:400px; overflow:hidden;}
+			.letter_btn{height:40px; width:40px; padding:5px; text-align: center; font-size: 30px; color: white; border-radius: 30px; background-color: #6D6C87; float:left ; margin:14px; font-family: Alef;}
+			input{padding:5px; border-radius:10px; border:4px solid #dedede; font-size:30px; color:gray; outline-width: 0; font-family: Alef;}
 		</style>	
 	</head>
 
 
 
 	<body>
+
 		<script>
+
 			function nextWord(){
 				var word = trainer.nextWord();
 				if(word.status){
@@ -69,13 +80,13 @@
 			var vocabularyData = {};
 			vocabularyData.name = 'test list';
 			vocabularyData.words = [];
-			vocabularyData.words.push({original:'original1', translation:'translation1'});
-			vocabularyData.words.push({original:'original2', translation:'translation2'});
-			vocabularyData.words.push({original:'original3', translation:'translation3'});
-			vocabularyData.words.push({original:'original4', translation:'translation4'});
-			vocabularyData.words.push({original:'original5', translation:'translation5'});
-			vocabularyData.words.push({original:'original6', translation:'translation6'});
-			vocabularyData.words.push({original:'original7', translation:'translation7'});
+			vocabularyData.words.push({original:'מנעד הגופנים', translation:'translation1'});
+			vocabularyData.words.push({original:'מנעד הגופנים', translation:'translation2'});
+			vocabularyData.words.push({original:'מנעד הגופנים הקיי', translation:'translation3'});
+			vocabularyData.words.push({original:'מנעד הגופנים הקיי', translation:'translation4'});
+			vocabularyData.words.push({original:'מנעד הגופנים הקיי', translation:'translation5'});
+			vocabularyData.words.push({original:'מנעד הגופנים הקיי', translation:'translation6'});
+			vocabularyData.words.push({original:'מנעד הגופנים הקיי', translation:'translation7'});
 
 			var trainer = new VocabularyTrainer({level:3, trainingCycles:10}, vocabularyData);
 			trainer.generatePossibleLetters();
@@ -86,21 +97,25 @@
 			
 			$(document).ready(function(){
 				nextWord();
-				/*chart.addData({x:0, y:0});
-				chart.addData({x:2, y:0.1});
-				chart.addData({x:4, y:0.2}); 
-				chart.addData({x:6, y:0.4}); 
-				chart.addData({x:8, y:0.5});  
-				chart.addData({x:12, y:0.65}); 
-				chart.addData({x:14, y:0.67}); 
-				chart.addData({x:16, y:0.8}); 
-				chart.addData({x:18, y:0.9}); 
-				chart.addData({x:20, y:0.95}); 
-				chart.addData({x:22, y:0.8});
-				*/
-			
 				chart.render();
-			
+
+				$('.letter_btn').mousedown(function(){
+					//alert('mousedown');
+					$(this).attr("rel", "down");
+					$(this).css('background-color', '#323236');
+				});
+
+				$('.letter_btn').mouseup(function(){
+					//alert('mousedown');
+					$(this).css('background-color', '#6D6C87');
+				});
+
+				$('.letter_btn').mouseleave(function(){
+					if($(this).attr("rel")=="down"){
+						$(this).css('background-color', '#6D6C87');
+					}
+				});
+
 				$("#translation").keyup(function(e){ 
 				    var code = e.which;
 				    if(code==13){
@@ -117,16 +132,40 @@
 			});
 
 		</script>
+		<div class="view">
+			<div class="content">
+				Guess that!
+			</div>
 
-		<div class="content">
-			Guess that!
+			<div class="answer">
+				<input type="text" id="translation" value="מים בעברית ברשת, ובעיקר להוות אלטרנטיבה א">
+			</div>
+
+			<div class="letters">
+				<div class="letter_btn">
+					ש
+				</div>
+				<div class="letter_btn">
+					ד
+				</div>
+				<div class="letter_btn">
+					ג
+				</div>
+				<div class="letter_btn">
+					כ
+				</div>
+				<div class="letter_btn">
+					ע
+				</div>
+
+			</di>
+
 		</div>
-
-		<div class="answer">
-			<input type="text" id="translation">
+		
+		
+		<div class="summary" style="display:none;">
+			<canvas id="chart" height="400" width="1900" ></canvas>
 		</div>
-
-		<canvas id="chart" height="400" width="1900" ></canvas>
 	</body>
 
 
